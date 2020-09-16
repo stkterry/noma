@@ -1,0 +1,154 @@
+#form-page {
+  display: flex;
+  justify-content: center;
+}
+
+#login_form-container {
+  margin-top: 100px;
+  max-width: 376px;
+  width: 100%;
+  padding: 64px 2.4rem 64px 2.4rem;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.062);
+
+  .logoHead {
+    margin-bottom: 100px;
+  }
+
+  .formHead {
+    margin-bottom: 32px;
+  }
+
+}
+
+.phoneInput {
+  border: 1px solid lightgray;
+  border-radius: .8rem;
+  padding: .8rem;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.form-default {
+
+  input, select {
+    background-color: white;
+    border: 1px solid lightgray;
+    border-radius: .8rem;
+    padding: .8rem;
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  select {
+    font-size: 1.6rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+
+  input:focus, select:focus {
+    outline:none;
+    border-color: $def_blue;
+  }
+}
+
+.inline-link {
+  font-size: 1.6rem;
+  text-decoration: none;
+  color: $def_blue;
+}
+
+.logoHead {
+  text-align: center;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  color: $def_blue;
+}
+
+
+#businessProfile {
+  margin-top: 64px;
+  max-width: 1000px;
+  width: 100%;
+  padding: 32px 2.4rem 64px 2.4rem;
+  box-sizing: border-box;
+  background-color: white;
+  box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.062);
+
+  .logoHead {
+    margin-bottom: 100px;
+  }
+
+  .formHead {
+    margin-bottom: 3.2rem;
+    h2 {
+      font-weight: 500;
+    }
+  }
+
+  .blockHead {
+    margin-top: 3.6rem;
+    margin-bottom: 1.6rem;
+  }
+
+}
+
+.inputOpt {
+  display: flex;
+  align-items: center;
+  input {
+    max-width: 200px;
+    margin-right: 1.6rem;
+  }
+  h3 {
+    color: gray;
+  }
+}
+
+.formBlock {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.formBlock-agreement {
+  width: 100%;
+  max-width: 450px;
+  display: flex;
+  margin-top: 1.2rem;
+
+  input {
+    padding: 0;
+    margin: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  p {
+    padding-left: 1rem;
+    max-width: 400px;
+  }
+}
+
+.formBlock-inputs {
+  width: 100%;
+  max-width: 450px;
+}
+
+// Lorem paragraph
+.formBlock-description {
+  margin: auto 0;
+  max-width: 450px;
+}
+
+@media (max-width: 950px) {
+  .formBlock {
+    flex-direction: column;
+  }
+}

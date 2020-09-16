@@ -7,17 +7,27 @@ module.exports = ({username, email, password, password2 }) => {
   password = toValidText(password);
   password2 = toValidText(password2);
 
+  const USERNAME = [
+    ...(!Validator.isLength(username, { min: 4, max: 30 }) ? ["Username is between 4 and 30 characters"] : []),
+    ...(Validator.isEmpty(username) ? ["Username field is required"] : []),
+  ]
+
+  const EMAIL = [
+    ...(Validator.isEmpty(email) ? ["Email field is required"] : []),
+    ...(!Validator.isEmail(email) ? ["Not a valid email"] : []),
+  ]
+
+  const PASSWORD = [
+    ...(!Validator.isLength(password, { min: 6, max: 30 }) ? ["Password is between 6 and 30 characters"] : []),
+    ...(Validator.isEmpty(password) ? ["Password field is required"] : []),
+    ...(Validator.isEmpty(password2) ? ["You must confirm password"] : []),
+    ...(!Validator.equals(password, password2) ? ["Passwords must match"] : []),   
+  ]
+
   const errors = {
-    ...(!Validator.isLength(username, { min: 4, max: 30 })
-      && { "Username is between 4 and 30 characters: ": false }),
-    ...(Validator.isEmpty(username) && { "Username field is required": null }),
-    ...(Validator.isEmpty(email) && { "Email field is required": null }),
-    ...(!Validator.isEmail(email) && { "Valid email: ": false }),
-    ...(!Validator.isLength(password, { min: 6, max: 30 })
-      && { "Password is between 6 and 30 characters: ": false }),
-    ...(Validator.isEmpty(password) && { "Password field is required": null }),
-    ...(Validator.isEmpty(password2) && { "Must confirm password": null }),
-    ...(!Validator.equals(password, password2) && { "Passwords must match: ": false })
+    ...(USERNAME.length && { username: USERNAME }),
+    ...(EMAIL.length && { email: EMAIL }),
+    ...(PASSWORD.length && { password: PASSWORD })
   }
 
   return {

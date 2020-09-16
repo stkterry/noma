@@ -12,11 +12,11 @@ const keys = require("../../config/keys");
 
 // User default errors
 const ERRORS = {
-  emailUnavailable: { "A user has already registered with that email": null },
-  usernameUnavailable: { "A user has already registered with that username": null },
-  userNotFound: { "No user with that username was found": null },
-  emailNotFound: { "No user with that email was found": null },
-  incorrectPassword: { "Password incorrect": null }
+  emailUnavailable: { email: ["A user has already registered with that email"] },
+  usernameUnavailable: { username: ["A user has already registered with that username"] },
+  userNotFound: { username: ["No user with that username was found"] },
+  emailNotFound: { email: ["No user with that email was found"] },
+  incorrectPassword: { password: ["Password incorrect"] }
 }
 
 // User maker
@@ -53,16 +53,21 @@ const genToken = (user, res) => {
 router.post('/register', (req, res) => {
 
   const { errors, isValid } = validateRegisterInput(req.body);
-  if (!isValid) eRes(res, 400, errors);
+  if (!isValid) eRes(res, 400, errors)
+  else {
+    User.findOne({ $or: [
+      { email: req.body.email },
+      { username: req.body.username }
+    ]})
+      .then(user => {
+        if (user) {
+          if (user.email === req.body.email) eRes(res, 400, ERRORS.emailUnavailable)
+          else if (user.username === req.body.username) eRes(res, 400, ERRORS.usernameUnavailable)
+        }
+        else createUser(req, res);
+      })
+  }
 
-  User.findOne({ email: req.body.email, username: req.body.username })
-    .then(user => {
-      if (user) {
-        if (user.email === req.body.email) eRes(res, 400, ERRORS.emailUnavailable)
-        else if (user.username === req.body.username) eRes(res, 400, ERRORS.usernameUnavailable)
-      }
-      else createUser(req, res);
-    })
 })
 
 // Login
@@ -70,19 +75,32 @@ router.post('/login', (req, res) => {
 
   const { errors, isValid } = validateLoginInput(req.body);
   if (!isValid) eRes(res, 400, errors);
-  const email = req.body.email;
-  const password = req.body.password;
 
   User.findOne({ email: req.body.email })
     .then(user => {
-      if (!user) eRes(res, 404, ERRORS.userNotFound);
-
-      bcrypt.compare(req.body.password, user.password)
-        .then(isMatch => {
-          if (isMatch) genToken(user, res)
-          else eRes(res, 400, ERRORS.incorrectPassword);
-        })
+      if (!user) eRes(res, 404, ERRORS.emailNotFound);
+      else {        
+        bcrypt.compare(req.body.password, user.password)
+          .then(isMatch => {
+            if (isMatch) genToken(user, res)
+            else eRes(res, 400, ERRORS.incorrectPassword);
+          })
+      }
     })
+})
+
+// updateProfile
+router.post('/profile', passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    console.log(req.body.profileData)
+    const userId = req.body.userId;
+    const data = req.body.profileData;
+    User.findByIdAndUpdate(
+      userId,
+      data
+    )
+    .then(user => res.json(user))
+    .catch(err => console.log(err))
 })
 // -----------------------------------------------------------------------------
 
