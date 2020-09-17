@@ -12,8 +12,11 @@ const defaultValues = {
 
 export default withRouter(function LoginForm (props) {
 
-  const [errors, setErrors] = useState({});
+  const [errors, setErrors] = useState([]);
   useEffect(() => { setErrors(props.errors) }, [props.errors]);
+  useEffect(() => {
+    setErrors([]);
+  },[])
   
   const onSubmit = formData => props.login(formData);
 
@@ -26,6 +29,7 @@ export default withRouter(function LoginForm (props) {
         <form className="form-default" onSubmit={handleSubmit(onSubmit)}>
           <h2 className="formHead">Login</h2>
           <input 
+            onFocus={() => setErrors([])}
             name="email"
             type="text"
             ref={register}
@@ -34,6 +38,7 @@ export default withRouter(function LoginForm (props) {
           <br />
           <ErrorList errors={errors.email} />
           <input
+            onFocus={() => setErrors([])}
             name="password"
             type="password"
             ref={register}

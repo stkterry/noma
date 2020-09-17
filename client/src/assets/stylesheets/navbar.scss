@@ -1,0 +1,105 @@
+
+
+
+
+#navbar {
+  position: absolute;
+  min-width: 1000px;
+  width: 100%;
+  @include shadow-basic;
+  background-color: white;
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  
+  .logoHead {
+    margin-left: 1rem;
+    margin-right: auto;
+  }
+}
+
+.navbar-links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navbar-link{
+  cursor: pointer
+}
+
+.selector {
+  cursor: pointer;
+  padding: 0 1rem;
+}
+
+.selector-active {
+  color: $def_blue;
+  border-bottom: 2px solid $def_blue;
+}
+.selector-inactive {
+  color: black;
+  border-bottom: 1px solid transparent;
+}
+
+
+.searchbox {
+  position: relative;
+  border: none !important;
+  width: 175px;
+  margin: 0 1rem;
+  box-sizing: border-box;
+
+  input {
+    box-sizing: border-box;
+    padding: 0 .8rem;
+    width: 100%;
+    outline: none;
+    border: 1px solid black;
+    border-radius: 4px;
+  }
+  input:focus {
+    outline: none;
+    border: 1px solid $def_blue;
+  }
+
+  ul {
+    box-sizing: border-box;
+    padding: 0 .8rem;
+    position: absolute;
+    width: 100%;
+    max-height: 400px;
+    box-sizing: border-box;
+    background-color: white;  
+    border: 1px solid lightgray;
+  }
+}
+
+.searchbox-icon {
+  cursor: pointer;
+  padding: 0 1rem;
+  font-size: 1.8rem;
+}
+
+#navbar-user {
+  height: 40px;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+
+  .navbar-userinfo {
+    text-overflow: ellipsis;
+    overflow-y: hidden;
+    word-break: break-all;
+    height: 40px;
+  }
+
+  .navbar-userIcon {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: lightgray;
+  }
+}

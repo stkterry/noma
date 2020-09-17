@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
 import { useForm } from 'react-hook-form';
-import { withRouter, Link } from 'react-router-dom';
+import { withRouter  } from 'react-router-dom';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
@@ -18,7 +21,6 @@ const phoneStyle={
   marginBottom: ".8rem",
 }
 const inputStyle={
-  border: "none",
   fontSize: "1.6rem",
   width: "100%",
   height:"100%",
@@ -28,10 +30,6 @@ const inputStyle={
 
 const disabledStyle = {
   backgroundColor: "lightGray", borderColor: "gray"
-}
-
-const errStyle = {
-  borderColor: 'red'
 }
 
 const defaultValues = {
@@ -50,17 +48,18 @@ const defaultValues = {
   businessOptAdr: "",
   businessCity: "",
   businessState: "none",
-  businessZip: ""
+  businessZip: "",
+  businessProfileComplete: false,
 }
 
 export default withRouter(function BusinessProfile(props) {
-
+  
+  const { watch, register, handleSubmit, setValue } = useForm({ defaultValues });
+  
   const onSubmit = formData => {
-    props.updateProfile({ profileData: formData, userId: props.userId });
+    props.updateProfile({ profileData: {...formData, businessProfileComplete: true}, userId: props.userId });
     props.history.push("/landing");
   }
-
-  const { watch, register, handleSubmit, setValue, errors } = useForm({ defaultValues });
   
   // Watch for changes to business street address to enable/disable the optional field
   const [opt, setOpt] = useState(true);
@@ -69,7 +68,7 @@ export default withRouter(function BusinessProfile(props) {
     let avl = !!!watchStreetAdr;
     if (avl) setValue("businessOptAdr", "") 
     setOpt(avl);
-  }, [watchStreetAdr]);
+  }, [watchStreetAdr, setValue]);
   
   // Watch for changes to business country to enable/disable US states listing
   const [stateAvl, setStateAvl] = useState(false);
@@ -78,12 +77,19 @@ export default withRouter(function BusinessProfile(props) {
     let avl = !(watchCountry === "United States of America (the)");
     if (avl); setValue("businessState", "none");
     setStateAvl(avl);
-  }, [watchCountry])
+  }, [watchCountry, setValue])
   
   return (
     <div id="form-page">
       <div id="businessProfile">
-        <h2 className="logoHead">NOMADORY</h2>
+        <div className="logoHead-block">
+          <h2 className="logoHead">NOMADORY</h2>
+          <FontAwesomeIcon 
+            className="logoHead-icon" 
+            icon={ faTimes } 
+            onClick={() => props.history.push('/landing')}
+          />
+        </div>
         <form className="form-default" onSubmit={handleSubmit(onSubmit)}>
 
           <div className="formHead">
@@ -131,7 +137,7 @@ export default withRouter(function BusinessProfile(props) {
             <PhoneInput
               name="primaryContactNum"
               type="text"
-              country={'us' + 'Phone number'}
+              country={'us'}
               inputRef={register({ required: true })}
               placeholder="Phone number"
               containerStyle={phoneStyle}
@@ -164,7 +170,7 @@ export default withRouter(function BusinessProfile(props) {
               <PhoneInput
                 name="businessNum"
                 type="text"
-                country={'us' + 'Phone number'}
+                country={'us'}
                 inputRef={register({ required: true })}
                 placeholder="Phone number"
                 containerStyle={phoneStyle}

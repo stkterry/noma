@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { updateProfile } from '../../actions/profile';
+import { updateProfile } from '../../actions/profile_actions';
 import BusinessProfile from './BusinessProfile';
 
 const mSP = state => ({

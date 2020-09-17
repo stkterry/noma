@@ -9,16 +9,24 @@ const defaultValues = {
   username: "",
   email: "",
   password: "",
-  password2: ""
+  password2: "",
+  firstName: "",
+  lastName: ""
 }
 
-export default withRouter(function LoginForm(props) {
+export default withRouter(function SignupForm(props) {
 
-  const [errors, setErrors] = useState({});
-  useEffect(() => { setErrors(props.errors) }, [props.errors]);
+
+
 
   const onSubmit = formData => props.signup(formData);
   const { register, handleSubmit } = useForm({ defaultValues });
+
+  const [errors, setErrors] = useState([]);
+  useEffect(() => { setErrors(props.errors) }, [props.errors]);
+  useEffect(() => {
+    setErrors([]);
+  }, [])
 
   return (
     <div id="form-page">
@@ -27,36 +35,40 @@ export default withRouter(function LoginForm(props) {
         <form className="form-default" onSubmit={handleSubmit(onSubmit)}>
           <h2 className="formHead">Signup</h2>
           <input
+            onFocus={() => setErrors([])}
             name="username"
             type="text"
             ref={register}
             placeholder="Username"
           />
           <br />
-          {props.errors.username && <ErrorList errors={props.errors.username} />}
+          {errors.username && <ErrorList errors={errors.username} />}
           <input
+            onFocus={() => setErrors([])}
             name="email"
             type="text"
             ref={register}
             placeholder="Email"
           />
           <br />
-          {props.errors.email && <ErrorList errors={props.errors.email} />}
+          {errors.email && <ErrorList errors={errors.email} />}
           <input
+            onFocus={() => setErrors([])}
             name="password"
-            type="text"
+            type="password"
             ref={register}
             placeholder="Password"
           />
           <br />
           <input
+            onFocus={() => setErrors([])}
             name="password2"
-            type="text"
+            type="password"
             ref={register}
             placeholder="Confirm Password"
           />
           <br />
-          {props.errors.password && <ErrorList errors={props.errors.password} />}
+          {errors.password && <ErrorList errors={errors.password} />}
           <BtnDef onClick={handleSubmit}>Create Nomadory account</BtnDef>
         </form>
 

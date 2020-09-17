@@ -92,7 +92,6 @@ router.post('/login', (req, res) => {
 // updateProfile
 router.post('/profile', passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    console.log(req.body.profileData)
     const userId = req.body.userId;
     const data = req.body.profileData;
     User.findByIdAndUpdate(
@@ -117,6 +116,12 @@ router.get('/current', passport.authenticate('jwt', {session: false}), (req, res
   });
 })
 
+// Profile Data - Basic
+router.get('/profile/:userId', passport.authenticate('jwt', { session: false }),(req, res) => {
+  User.findById(req.params.userId)
+    .then(user => res.json(user))
+    .catch(err => console.log(err));
+})
 // -----------------------------------------------------------------------------
 
 module.exports = router;

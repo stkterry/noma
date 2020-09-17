@@ -1,3 +1,37 @@
+@mixin shadow-basic {
+  box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.062);
+}
+
 html {
   background-color: $def_background;
+}
+
+.logoHead-block {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.logoHead-icon {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
+.logoHead {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  color: $def_blue;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+[required] {
+    box-shadow: none;
 }

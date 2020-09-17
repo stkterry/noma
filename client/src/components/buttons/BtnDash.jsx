@@ -1,10 +1,10 @@
 import React from 'react';
 
-export default function BtnDef ({onClick, children, ...rest}) {
+export default function BtnDash ({onClick, children, ...rest}) {
 
   return (
     <button 
-      className="btn-def" 
+      className="btn-dash" 
       onClick={onClick}
       {...rest}
       >
