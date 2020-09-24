@@ -17,16 +17,17 @@ const defaultValues = {
 export default withRouter(function SignupForm(props) {
 
 
-
+  useEffect(() => { 
+    if(props.isSignedIn) props.login(getValues(['email', 'password']))
+  }, [props.isSignedIn])
 
   const onSubmit = formData => props.signup(formData);
-  const { register, handleSubmit } = useForm({ defaultValues });
+  
+  const { register, handleSubmit, getValues } = useForm({ defaultValues });
 
   const [errors, setErrors] = useState([]);
   useEffect(() => { setErrors(props.errors) }, [props.errors]);
-  useEffect(() => {
-    setErrors([]);
-  }, [])
+  useEffect(() => { setErrors([]) }, []);
 
   return (
     <div id="form-page">

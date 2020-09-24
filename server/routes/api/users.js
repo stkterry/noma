@@ -54,7 +54,6 @@ router.post('/register', (req, res) => {
 
   const { errors, isValid } = validateRegisterInput(req.body);
   if (!isValid) eRes(res, 400, errors)
-  else {
     User.findOne({ $or: [
       { email: req.body.email },
       { username: req.body.username }
@@ -66,7 +65,6 @@ router.post('/register', (req, res) => {
         }
         else createUser(req, res);
       })
-  }
 
 })
 

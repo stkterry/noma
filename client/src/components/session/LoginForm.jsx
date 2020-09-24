@@ -14,9 +14,7 @@ export default withRouter(function LoginForm (props) {
 
   const [errors, setErrors] = useState([]);
   useEffect(() => { setErrors(props.errors) }, [props.errors]);
-  useEffect(() => {
-    setErrors([]);
-  },[])
+  useEffect(() => { setErrors([]) }, [])
   
   const onSubmit = formData => props.login(formData);
 
